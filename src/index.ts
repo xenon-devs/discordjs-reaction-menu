@@ -105,7 +105,7 @@ export class ReactionMenu {
     }
   }
 
-  private handleReaction(reaction: MessageReaction) {
+  handleReaction(reaction: MessageReaction) {
     switch (reaction.emoji.name) {
       case this.controlsEmojis.first:
         this.displayPage(0)
