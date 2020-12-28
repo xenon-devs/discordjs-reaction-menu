@@ -1,7 +1,7 @@
 {
   "name": "@xenon-devs/discordjs-reaction-menu",
   "private": false,
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "A simple, modern and easy to use reaction menu for discord.js",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
