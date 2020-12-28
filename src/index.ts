@@ -13,17 +13,17 @@ export interface IMenuPage {
 }
 
 export class ReactionMenu {
-  pages: IMenuPage[] = [];
-  controlEmojis: IControlsEmojis;
-  allEmojis: string[] = [];
-  channel: TextChannel | DMChannel;
+  private pages: IMenuPage[] = [];
+  controlsEmojis: IControlsEmojis;
+  private allEmojis: string[] = [];
+  private channel: TextChannel | DMChannel;
   menuMessage: Message;
   reactionCollector: ReactionCollector;
   listenTo: string[]; // Array of user IDs
   currentPage: number = 0;
   timeout: number = 60;
 
-  static ControlEmojiDefaults = {
+  static ControlsEmojiDefaults = {
     first: '⏮️',
     next: '➡️',
     back: '⬅️',
@@ -35,20 +35,20 @@ export class ReactionMenu {
    * @param pages An array of pages for the menu
    * @param channel The channel in which the embed should be send
    * @param timeout The time (in seconds) after which the menu stops working
-   * @param customControlEmojis Option custom controls emojis ie the next and back buttons
+   * @param customcontrolsEmojis Optional custom controls emojis, that is, the next and back buttons
    */
   constructor(
     pages: IMenuPage[],
     channel: TextChannel | DMChannel,
     timeout: number = 60,
-    customControlEmojis: IControlsEmojis = ReactionMenu.ControlEmojiDefaults
+    customcontrolsEmojis: IControlsEmojis = ReactionMenu.ControlsEmojiDefaults
   ) {
     this.pages = pages;
     this.channel = channel;
     this.timeout = timeout;
 
-    this.controlEmojis = customControlEmojis;
-    for (let emoji in this.controlEmojis) this.allEmojis.push(this.controlEmojis[emoji]);
+    this.controlsEmojis = customcontrolsEmojis;
+    for (let emoji in this.controlsEmojis) this.allEmojis.push(this.controlsEmojis[emoji]);
   }
 
   /**
@@ -66,8 +66,8 @@ export class ReactionMenu {
       this.menuMessage =  await this.channel.send(this.pages[startPage].pageEmbed);
       this.currentPage = startPage;
 
-      await this.menuMessage.react(this.controlEmojis.first);
-      await this.menuMessage.react(this.controlEmojis.next);
+      await this.menuMessage.react(this.controlsEmojis.first);
+      await this.menuMessage.react(this.controlsEmojis.next);
 
       // Add custom page emojis
       for (const page of this.pages) {
@@ -78,8 +78,8 @@ export class ReactionMenu {
       }
       // /Add custom page emojis
 
-      await this.menuMessage.react(this.controlEmojis.back);
-      await this.menuMessage.react(this.controlEmojis.last);
+      await this.menuMessage.react(this.controlsEmojis.back);
+      await this.menuMessage.react(this.controlsEmojis.last);
 
       this.reactionCollector = this.menuMessage.createReactionCollector(
         ({emoji}, user) => {
@@ -105,18 +105,18 @@ export class ReactionMenu {
     }
   }
 
-  handleReaction(reaction: MessageReaction) {
+  private handleReaction(reaction: MessageReaction) {
     switch (reaction.emoji.name) {
-      case this.controlEmojis.first:
+      case this.controlsEmojis.first:
         this.displayPage(0)
         break;
-      case this.controlEmojis.last:
+      case this.controlsEmojis.last:
         this.displayPage(this.pages.length - 1);
         break;
-      case this.controlEmojis.next:
+      case this.controlsEmojis.next:
         this.displayPage(Math.min(this.pages.length - 1, this.currentPage + 1));
         break;
-      case this.controlEmojis.back:
+      case this.controlsEmojis.back:
         this.displayPage(Math.max(0, this.currentPage - 1));
         break;
       default:
@@ -134,7 +134,7 @@ export class ReactionMenu {
 
   /**
    * Displays a certain page
-   * @param pageNumber 0-indexed number of the page
+   * @param pageNumber 0-indexed number of the page to be displayed
    */
   async displayPage(pageNumber: number = 0) {
     if (!this.menuMessage) throw new Error('Use .start() first.');
