@@ -83,9 +83,9 @@ export class ReactionMenu {
 
       this.reactionCollector = this.menuMessage.createReactionCollector(
         ({emoji}, user) => {
-          return (this.allEmojis.indexOf(emoji.name) !== -1) &&
-          (!user.bot) &&
-          (this.listenTo.indexOf(user.id) !== -1)
+          return this.allEmojis.includes(emoji.name) &&
+            !user.bot &&
+            this.listenTo.includes(user.id)
         },
         {
           dispose: true,
