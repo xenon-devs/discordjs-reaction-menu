@@ -67,7 +67,7 @@ export class ReactionMenu {
       this.currentPage = startPage;
 
       await this.menuMessage.react(this.controlsEmojis.first);
-      await this.menuMessage.react(this.controlsEmojis.next);
+      await this.menuMessage.react(this.controlsEmojis.back);
 
       // Add custom page emojis
       for (const page of this.pages) {
@@ -78,7 +78,7 @@ export class ReactionMenu {
       }
       // /Add custom page emojis
 
-      await this.menuMessage.react(this.controlsEmojis.back);
+      await this.menuMessage.react(this.controlsEmojis.next);
       await this.menuMessage.react(this.controlsEmojis.last);
 
       this.reactionCollector = this.menuMessage.createReactionCollector(
