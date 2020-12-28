@@ -140,12 +140,14 @@ export class ReactionMenu {
     if (!this.menuMessage) throw new Error('Use .start() first.');
     else if (!this.pages[pageNumber]) throw new Error('Page number invalid.');
     else {
-      try {
-        this.currentPage = pageNumber;
-        return await this.menuMessage.edit(this.pages[pageNumber].pageEmbed);
-      }
-      catch (e) {
-        throw e;
+      if (this.currentPage !== pageNumber) {
+        try {
+          this.currentPage = pageNumber;
+          return await this.menuMessage.edit(this.pages[pageNumber].pageEmbed);
+        }
+        catch (e) {
+          throw e;
+        }
       }
     }
   }
