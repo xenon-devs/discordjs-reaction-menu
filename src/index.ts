@@ -138,11 +138,11 @@ export class ReactionMenu {
    */
   async displayPage(pageNumber: number = 0) {
     if (!this.menuMessage) throw new Error('Use .start() first.');
-    else if (this.pages[pageNumber]) throw new Error('Page number invalid.');
+    else if (!this.pages[pageNumber]) throw new Error('Page number invalid.');
     else {
       try {
-        return await this.menuMessage.edit(this.pages[pageNumber].pageEmbed);
         this.currentPage = pageNumber;
+        return await this.menuMessage.edit(this.pages[pageNumber].pageEmbed);
       }
       catch (e) {
         throw e;
