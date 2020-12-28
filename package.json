@@ -1,0 +1,29 @@
+{
+  "name": "discordjs-reaction-menu",
+  "version": "1.0.0",
+  "description": "A simple, modern and easy to use reaction menu for discord.js",
+  "main": "dist/index.js",
+  "typings": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "npm-publish": "yarn build && yarn publish"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/xenon-devs/discordjs-reaction-menu.git"
+  },
+  "keywords": [
+    "discordjs",
+    "reaction-menu"
+  ],
+  "author": "Team Xenon",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/xenon-devs/discordjs-reaction-menu/issues"
+  },
+  "homepage": "https://github.com/xenon-devs/discordjs-reaction-menu#readme",
+  "devDependencies": {
+    "discord.js": "^12.5.1",
+    "typescript": "^4.1.3"
+  }
+}
