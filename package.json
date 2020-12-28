@@ -7,7 +7,7 @@
   "typings": "dist/index.d.ts",
   "scripts": {
     "build": "tsc",
-    "npm-publish": "yarn build && yarn publish"
+    "npm-publish": "yarn build && yarn publish --access=public"
   },
   "repository": {
     "type": "git",
