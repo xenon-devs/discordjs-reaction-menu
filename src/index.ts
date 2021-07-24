@@ -1,4 +1,5 @@
 import { MessageEmbed, TextChannel, DMChannel, Message, ReactionCollector, MessageReaction } from 'discord.js';
+import { edit } from './rate-limited-edit';
 
 export interface IControlsEmojis {
   first: string,
@@ -108,7 +109,7 @@ export class ReactionMenu {
   handleReaction(reaction: MessageReaction) {
     switch (reaction.emoji.name) {
       case this.controlsEmojis.first:
-        this.displayPage(0)
+        this.displayPage(0);
         break;
       case this.controlsEmojis.last:
         this.displayPage(this.pages.length - 1);
@@ -143,7 +144,13 @@ export class ReactionMenu {
       if (this.currentPage !== pageNumber) {
         try {
           this.currentPage = pageNumber;
-          return await this.menuMessage.edit(this.pages[pageNumber].pageEmbed);
+
+          return await edit(
+            this.menuMessage,
+            this.channel.type === 'dm',
+            this.channel.type === 'text' ? this.channel.guild.id : this.channel.id,
+            this.pages[pageNumber].pageEmbed
+          )
         }
         catch (e) {
           throw e;
